@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubicaciones</title>
+</head>
+<body>
+    <h1>Ubicaciones de los Libros</h1>
+    <ul>
+        {% for ubicacion in ubicaciones %}
+        <li>
+            <strong>Libro ID:</strong> {{ ubicacion['libro_id'] }}<br>
+            <strong>Sala:</strong> {{ ubicacion['sala'] }}<br>
+            <strong>Estante:</strong> {{ ubicacion['estante'] }}<br>
+            <strong>Sección:</strong> {{ ubicacion['seccion'] }}
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="/">Volver</a>
+</body>
+</html>
+

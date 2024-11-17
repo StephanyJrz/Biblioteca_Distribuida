@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados</title>
+</head>
+<body>
+    <h1>Resultados de la búsqueda</h1>
+    <ul>
+        {% for libro in libros %}
+            <li>
+                <strong>{{ libro['titulo'] }}</strong> - {{ libro['autor'] }}<br>
+                <em>Categoría:</em> {{ libro['categoria'] }}<br>
+                <form action="/prestar" method="post">
+                    <input type="hidden" name="libro_id" value="{{ libro['id'] }}">
+                    <input type="text" name="usuario" placeholder="Nombre del usuario" required>
+                    <button type="submit">Prestar</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="/">Volver</a>
+</body>
+</html>
+
