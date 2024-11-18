@@ -19,6 +19,7 @@ def buscar():
     titulo = request.args.get('titulo', '').strip()
     autor = request.args.get('autor', '').strip()
     
+
     # Solicita datos al contenedor catalogo
     response = requests.get(f'{CATALOGO_URL}/libros', params={'titulo': titulo, 'autor': autor})
     
@@ -48,6 +49,8 @@ def prestar():
         mensaje = "Error al registrar el préstamo."
     
     return render_template('mensaje.html', mensaje=mensaje)
+
+
 @app.route('/ubicaciones', methods=['GET'])
 def consultar_ubicaciones():
     # Solicitar información de ubicaciones al contenedor `ubicaciones_prestamos`
@@ -58,6 +61,12 @@ def consultar_ubicaciones():
         ubicaciones = []  # Lista vacía en caso de error
     
     return render_template('ubicaciones.html', ubicaciones=ubicaciones)
+
+
+
+
+
+
 
 @app.route('/prestamos', methods=['GET'])
 def consultar_prestamos():
@@ -70,7 +79,33 @@ def consultar_prestamos():
     
     return render_template('prestamos.html', prestamos=prestamos)
 
+@app.route('/disponibilidad', methods=['GET'])
+def consultar_disponibilidad():
+    # Solicitar información de préstamos al contenedor `ubicaciones_prestamos`
+    response = requests.get(f'{CATALOGO_URL}/disponibilidad')
+    if response.status_code == 200:
+        disponibles = response.json()
+    else:
+        disponibles = []  # Lista vacía en caso de error
+    
+    return render_template('disponibilidad.html', disponibles=disponibles)
 
+@app.route('/categorias', methods=['GET'])
+def consultar_categoria():
+    try:
+        # Solicitar información de categorías al servicio `catalogo`
+        response = requests.get(f'{CATALOGO_URL}/categorias')
+        if response.status_code == 200:
+            libros = response.json()  # Datos obtenidos del servicio
+        else:
+            print("Error al obtener categorías:", response.status_code)
+            libros = []  # Lista vacía en caso de error
+    except Exception as e:
+        print("Error al conectarse con el servicio de catálogo:", e)
+        libros = []  # Lista vacía en caso de excepción
+
+    # Pasar los datos a la plantilla
+    return render_template('categorias.html', libros=libros)
 
 
 # Bloque para ejecutar la aplicación

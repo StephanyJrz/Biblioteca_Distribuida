@@ -3,10 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mensaje</title>
+    <title>Categorías</title>
   </head>
   <body>
-    <h1>{{ mensaje }}</h1>
+    <h1>Categorías disponibles</h1>
+
+    <h2>Ficción</h2>
+    <ul>
+      {% for libro in categoria %} {% if libro['categoria'] == 'Ficción' %}
+      <li>
+        <strong>{{ libro['titulo'] }}</strong> - {{ libro['autor'] }}<br />
+        <em>Categoría:</em> {{ libro['categoria'] }}<br />
+        <form action="/prestar" method="post">
+          <input type="hidden" name="libro_id" value="{{ libro['id'] }}" />
+          <input
+            type="text"
+            name="usuario"
+            placeholder="Nombre del usuario"
+            required
+          />
+          <button type="submit">Prestar</button>
+        </form>
+      </li>
+      {% endif %} {% endfor %}
+    </ul>
+
+    <h3>Ficción</h3>
+    <u2>
+      {% for libro in categoria %} {% if libro['categoria'] == 'Ficción' %}
+      <li>
+        <strong>{{ libro['titulo'] }}</strong> - {{ libro['autor'] }}<br />
+        <em>Categoría:</em> {{ libro['categoria'] }}<br />
+        <form action="/prestar" method="post">
+          <input type="hidden" name="libro_id" value="{{ libro['id'] }}" />
+          <input
+            type="text"
+            name="usuario"
+            placeholder="Nombre del usuario"
+            required
+          />
+          <button type="submit">Prestar</button>
+        </form>
+      </li>
+      {% endif %} {% endfor %}
+    </u2>
+
     <a href="/">Volver</a>
   </body>
 </html>
