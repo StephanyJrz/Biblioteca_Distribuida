@@ -1,22 +1,28 @@
-version: '3.8'
+#version: '3.8'
 services:
   catalogo:
     build: ./fragmento_catalogo
     container_name: catalogo
     ports:
       - "5001:5000"
+    volumes:
+      - ./fragmento_catalogo:/app
 
   ubicaciones_prestamos:
     build: ./fragmento_ubicaciones_prestamos
     container_name: ubicaciones_prestamos
     ports:
       - "5002:5000"
+    volumes:
+      - ./fragmento_ubicaciones_prestamos:/app
 
   interfaz_grafica:
     build: ./interfaz_grafica
     container_name: interfaz_grafica
     ports:
-      - "5003:5000"
+      - "5004:5000"
+    volumes:
+      - ./interfaz_grafica:/app
     depends_on:
       - catalogo
       - ubicaciones_prestamos
