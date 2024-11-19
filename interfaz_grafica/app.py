@@ -92,20 +92,28 @@ def consultar_disponibilidad():
 
 @app.route('/categorias', methods=['GET'])
 def consultar_categoria():
-    try:
-        # Solicitar información de categorías al servicio `catalogo`
-        response = requests.get(f'{CATALOGO_URL}/categorias')
-        if response.status_code == 200:
-            libros = response.json()  # Datos obtenidos del servicio
-        else:
-            print("Error al obtener categorías:", response.status_code)
-            libros = []  # Lista vacía en caso de error
-    except Exception as e:
-        print("Error al conectarse con el servicio de catálogo:", e)
-        libros = []  # Lista vacía en caso de excepción
+    # Obtén la categoría si está en los parámetros de la consulta (no es obligatorio)
+    categoria = request.args.get('categoria', '').strip()
 
-    # Pasar los datos a la plantilla
-    return render_template('categorias.html', libros=libros)
+    # Solicita datos al contenedor catálogo
+    response = requests.get(f'{CATALOGO_URL}/libros', params={'categoria': categoria})
+    
+    if response.status_code == 200:
+        libros = response.json()
+        # Agrupar los libros por categoría
+        categorias = {}
+        for libro in libros:
+            cat = libro.get('categoria', 'Sin categoría')
+            if cat not in categorias:
+                categorias[cat] = []
+            categorias[cat].append(libro['titulo'])
+    else:
+        categorias = {}  # Diccionario vacío en caso de error
+
+    # Renderiza el template con las categorías agrupadas
+    return render_template('categorias.html', categorias=categorias)
+
+
 
 
 # Bloque para ejecutar la aplicación
