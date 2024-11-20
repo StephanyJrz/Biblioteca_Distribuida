@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from datetime import datetime
 import requests
 
 # Definición de la aplicación Flask
@@ -36,12 +37,13 @@ def buscar():
 def prestar():
     libro_id = request.form.get('libro_id')
     usuario = request.form.get('usuario')
-    
+    fecha_actual = datetime.now().strftime('%Y-%m-%d')
+
     # Enviar datos al fragmento de ubicaciones_prestamos
     response = requests.post(f'{UBICACIONES_URL}/prestamos', json={
         'libro_id': libro_id,
         'usuario': usuario,
-        'fecha_prestamo': '2024-11-16'  # Fecha actual o dinámica
+        'fecha_prestamo': fecha_actual  # Fecha actual o dinámica
     })
     
     if response.status_code == 201:
