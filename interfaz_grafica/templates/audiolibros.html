@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audiolibros</title>
+</head>
+<body>
+  <h1>Audiolibros existentes</h1>
+  <ul>
+    {% if tipos %}
+      {% for libro in tipos %}
+      <li>
+        <strong>{{ libro['titulo'] }}</strong> - {{ libro['autor'] }}<br />
+        <em>Categoría:</em> {{ libro['categoria'] }}<br />
+        <em>Tipo de libro:</em> {{ libro['tipo'] }}<br />
+      </li>
+      {% endfor %}
+    {% else %}
+      <li>No hay audiolibros disponibles actualmente.</li>
+    {% endif %}
+  </ul>
+  <a href="/">Volver</a>
+</body>
+</html>

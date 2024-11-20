@@ -114,6 +114,27 @@ def consultar_categoria():
     return render_template('categorias.html', categorias=categorias)
 
 
+# Ruta para verificar audiolibros existentes 
+@app.route('/audiolibros', methods=['GET'])
+def consultar_audiolibros():
+
+    # Consulta los libros del tipo 'Audiolibro' desde el contenedor catálogo.
+    try:
+        # Solicitar información de audiolibros al contenedor 'catalogo'
+        response = requests.get(f'{CATALOGO_URL}/libros', params={'tipo': 'Audiolibro'})
+
+        if response.status_code == 200:
+            audiolibros = response.json()  # Lista de audiolibros
+        else:
+            audiolibros = []  # Lista vacía en caso de error
+
+        # Renderizar el template con los datos obtenidos
+        return render_template('audiolibros.html', tipos=audiolibros)
+    
+    except Exception as e:
+        # Manejo de error
+        mensaje_error = f"Error al consultar audiolibros: {str(e)}"
+        return render_template('mensaje.html', mensaje=mensaje_error)
 
 
 # Bloque para ejecutar la aplicación

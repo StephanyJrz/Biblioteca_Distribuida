@@ -14,6 +14,7 @@ def get_db_connection():
 def get_libros():
     titulo = request.args.get('titulo', '').strip()
     autor = request.args.get('autor', '').strip()
+    tipo = request.args.get('tipo', None)
 
     query = "SELECT * FROM libros WHERE 1=1"
     params = []
@@ -23,7 +24,10 @@ def get_libros():
     if autor:
         query += " AND autor LIKE ?"
         params.append(f"%{autor}%")
-    
+    if tipo:
+        query += " AND tipo LIKE ?"
+        params.append(f"%{tipo}%")
+
     conn = get_db_connection()
     libros = conn.execute(query, params).fetchall()
     conn.close()
