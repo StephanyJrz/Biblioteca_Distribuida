@@ -4,6 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Biblioteca</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        padding: 20px 0;
+        margin-top: 0;
+      }
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+        margin-top: 20px;
+      }
+      form {
+        text-align: center;
+        margin: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      input[type="text"] {
+        padding: 10px;
+        margin: 10px;
+        width: 250px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+        text-align: center;
+      }
+      ul li {
+        margin: 15px;
+        font-size: 18px;
+      }
+      ul li a {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      ul li a:hover {
+        color: #2980b9;
+      }
+      hr {
+        border: 1px solid #ddd;
+        margin: 40px 0;
+      }
+    </style>
   </head>
   <body>
     <h1>Biblioteca</h1>
@@ -15,6 +83,7 @@
       <input type="text" name="autor" placeholder="Buscar por autor" />
       <input type="text" name="idioma" placeholder="Buscar por idioma" />
       <input type="text" name="editorial" placeholder="Buscar por editorial" />
+      <br />
       <button type="submit">Buscar</button>
     </form>
 
@@ -25,8 +94,7 @@
     <ul>
       <li><a href="/ubicaciones">Consultar Ubicaciones</a></li>
       <li><a href="/prestamos">Consultar Préstamos</a></li>
-
-      <li><a href="/categorias">Consultar por categorias</a></li>
+      <li><a href="/categorias">Consultar por Categorías</a></li>
       <li><a href="/audiolibros">Consulta de Audiolibros</a></li>
     </ul>
   </body>
