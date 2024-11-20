@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import requests
 
 # Definición de la aplicación Flask
@@ -136,6 +136,18 @@ def consultar_audiolibros():
         mensaje_error = f"Error al consultar audiolibros: {str(e)}"
         return render_template('mensaje.html', mensaje=mensaje_error)
     
+# Para ver la sinopsis
+@app.route('/sinopsis/<int:libro_id>', methods=['GET'])
+def sinopsis(libro_id):
+    # Solicitar el libro con el ID proporcionado desde el contenedor de catálogo
+    response = requests.get(f'{CATALOGO_URL}/libros', params={'id': libro_id})
+
+    if response.status_code == 200:
+        libro = response.json()[0]  # Suponemos que el libro con el ID existe
+        sinopsis = libro.get('sinopsis', 'No se encontró sinopsis para este libro.')
+        return jsonify({'sinopsis': sinopsis})
+    else:
+        return jsonify({'sinopsis': 'Error al obtener la sinopsis del libro.'}), 404
 
 
 # Bloque para ejecutar la aplicación

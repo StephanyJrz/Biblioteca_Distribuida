@@ -1,3 +1,37 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resultados</title>
+  </head>
+  <body>
+    <h1>Resultados de la búsqueda</h1>
+    <ul>
+      {% for libro in libros %}
+      <li>
+        <strong>{{ libro['titulo'] }}</strong> - {{ libro['autor'] }}<br />
+        <em>Categoría:</em> {{ libro['categoria'] }}<br />
+        <em>Idioma original:</em> {{ libro['idioma'] }}<br />
+
+
+        <form action="/prestar" method="post">
+          <input type="hidden" name="libro_id" value="{{ libro['id'] }}" />
+          <input
+            type="text"
+            name="usuario"
+            placeholder="Nombre del usuario"
+            required
+          />
+          <button type="submit">Prestar</button>
+        </form>
+      </li>
+      {% endfor %}
+    </ul>
+    <a href="/">Volver</a>
+  </body>
+</html>
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,6 +47,10 @@
         <strong>{{ libro['titulo'] }}</strong> - {{ libro['autor'] }}<br />
         <em>Categoría:</em> {{ libro['categoria'] }}<br />
         <em>Idioma original:</em> {{ libro['idioma'] }}<br />
+        
+        <!-- Botón para mostrar la sinopsis -->
+        <button onclick="mostrarSinopsis('{{ libro['id'] }}')">Ver Sinopsis</button>
+
         <form action="/prestar" method="post">
           <input type="hidden" name="libro_id" value="{{ libro['id'] }}" />
           <input
@@ -27,5 +65,32 @@
       {% endfor %}
     </ul>
     <a href="/">Volver</a>
+
+    <!-- Area para mostrar la sinopsis -->
+    <div id="sinopsisContainer" style="display:none;">
+      <h2>Sinopsis:</h2>
+      <p id="sinopsisText"></p>
+      <button onclick="cerrarSinopsis()">Cerrar</button>
+    </div>
+
+    <script>
+      function mostrarSinopsis(libroId) {
+        fetch(`/sinopsis/${libroId}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.sinopsis) {
+              document.getElementById("sinopsisText").innerText = data.sinopsis;
+              document.getElementById("sinopsisContainer").style.display = "block";
+            }
+          })
+          .catch(error => {
+            alert('Error al cargar la sinopsis');
+          });
+      }
+
+      function cerrarSinopsis() {
+        document.getElementById("sinopsisContainer").style.display = "none";
+      }
+    </script>
   </body>
 </html>
