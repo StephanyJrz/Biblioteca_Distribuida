@@ -15,6 +15,7 @@ def get_libros():
     titulo = request.args.get('titulo', '').strip()
     autor = request.args.get('autor', '').strip()
     tipo = request.args.get('tipo', None)
+    idioma = request.args.get('idioma', '').strip()
 
     query = "SELECT * FROM libros WHERE 1=1"
     params = []
@@ -24,6 +25,9 @@ def get_libros():
     if autor:
         query += " AND autor LIKE ?"
         params.append(f"%{autor}%")
+    if idioma:
+        query += " AND idioma LIKE ?"
+        params.append(f"%{idioma}%")
     if tipo:
         query += " AND tipo LIKE ?"
         params.append(f"%{tipo}%")
@@ -33,6 +37,7 @@ def get_libros():
     conn.close()
 
     return jsonify([dict(libro) for libro in libros])
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

@@ -12,6 +12,7 @@
       <li>
         <strong>{{ libro['titulo'] }}</strong> - {{ libro['autor'] }}<br />
         <em>Categoría:</em> {{ libro['categoria'] }}<br />
+        <em>Idioma original:</em> {{ libro['idioma'] }}<br />
         <form action="/prestar" method="post">
           <input type="hidden" name="libro_id" value="{{ libro['id'] }}" />
           <input

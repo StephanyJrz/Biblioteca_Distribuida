@@ -18,10 +18,10 @@ def index():
 def buscar():
     titulo = request.args.get('titulo', '').strip()
     autor = request.args.get('autor', '').strip()
-    
+    idioma = request.args.get('idioma', '').strip()
 
     # Solicita datos al contenedor catalogo
-    response = requests.get(f'{CATALOGO_URL}/libros', params={'titulo': titulo, 'autor': autor})
+    response = requests.get(f'{CATALOGO_URL}/libros', params={'titulo': titulo, 'autor': autor, 'idioma': idioma})
     
     if response.status_code == 200:
         libros = response.json()
@@ -135,6 +135,7 @@ def consultar_audiolibros():
         # Manejo de error
         mensaje_error = f"Error al consultar audiolibros: {str(e)}"
         return render_template('mensaje.html', mensaje=mensaje_error)
+    
 
 
 # Bloque para ejecutar la aplicación
