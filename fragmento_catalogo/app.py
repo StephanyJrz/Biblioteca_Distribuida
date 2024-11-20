@@ -17,6 +17,7 @@ def get_libros():
     tipo = request.args.get('tipo', None)
     idioma = request.args.get('idioma', '').strip()
     id = request.args.get('id', '').strip()
+    editorial = request.args.get('editorial', '').strip()
 
     query = "SELECT * FROM libros WHERE 1=1"
     params = []
@@ -35,6 +36,9 @@ def get_libros():
     if id:
         query += " AND id LIKE ?"
         params.append(f"%{id}%")
+    if editorial:
+        query += " AND editorial LIKE ?"
+        params.append(f"%{editorial}%")
 
     conn = get_db_connection()
     libros = conn.execute(query, params).fetchall()

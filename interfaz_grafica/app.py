@@ -19,9 +19,10 @@ def buscar():
     titulo = request.args.get('titulo', '').strip()
     autor = request.args.get('autor', '').strip()
     idioma = request.args.get('idioma', '').strip()
+    editorial = request.args.get('editorial', '').strip()
 
     # Solicita datos al contenedor catalogo
-    response = requests.get(f'{CATALOGO_URL}/libros', params={'titulo': titulo, 'autor': autor, 'idioma': idioma})
+    response = requests.get(f'{CATALOGO_URL}/libros', params={'titulo': titulo, 'autor': autor, 'idioma': idioma, 'editorial': editorial})
     
     if response.status_code == 200:
         libros = response.json()
